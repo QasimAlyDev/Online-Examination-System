@@ -158,6 +158,6 @@ class AuthController extends Controller
         $user->save();
 
         PasswordReset::where('email',$user->email)->delete();
-        return "<h2>Your password has been reset successfully.</h2>";
+        return back()->with('success','Your password has been reset successfully.');
     }
 }
