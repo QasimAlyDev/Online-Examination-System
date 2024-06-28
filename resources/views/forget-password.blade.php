@@ -35,10 +35,9 @@
                                 <button class="btn btn-primary w-100" type="submit">Send</button>
                             </div>
                             <div class="col-12">
-                                <p class="small mb-0">Don't have account? <a href="/login">Log in</a></p>
+                                <p class="small mb-0">Remembered your password? <a href="/login">Log in</a></p>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
