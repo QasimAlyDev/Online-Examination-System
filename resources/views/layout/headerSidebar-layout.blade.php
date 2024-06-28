@@ -1,4 +1,3 @@
-
 @extends('layout.common-layout')
 
     <!-- ======= Header ======= -->
@@ -7,12 +6,10 @@
         <div class="d-flex align-items-center justify-content-between">
             <a href="/admin/dashboard" class="logo d-flex align-items-center">
                 <img src="{{ asset('assets/img/logo.png') }}" alt="">
-                <span class="d-none d-lg-block">NiceAdmin</span>
+                <span class="d-none d-lg-block">Admin Dashboard</span>
             </a>
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
-
-
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -64,19 +61,14 @@
 
             <li class="nav-item">
                 <a class="nav-link " href="/admin/dashboard">
-                    <i class="bi bi-grid"></i>
-                    <span>Dashboard</span>
+                    <i class="bi bi-book"></i>
+                    <span>Subjects</span>
                 </a>
             </li><!-- End Dashboard Nav -->
 
             <li class="nav-heading">Pages</li>
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#">
-                    <i class="bi bi-book"></i>
-                    <span>Subjects</span>
-                </a>
-            </li><!-- End Profile Page Nav -->
+            
+            <!-- End Profile Page Nav -->
 
         </ul>
 
