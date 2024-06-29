@@ -100,14 +100,21 @@
                 },
                 success: function(data){
                     if(data.success == true){
-                        // Ensure the success check is properly comparing the value
-                        location.reload();
+                        toastr.success(data.msg);
+                        // Delay the reload to give time for the toastr notification to show
+                        setTimeout(function(){
+                            location.reload();
+                        }, 2000); // Adjust the delay time (in milliseconds) as needed
                     } else {
-                        alert(data.msg);
+                        toastr.error(data.msg);
                     }
+                },
+                error: function(xhr){
+                    toastr.error('An error occurred while adding the subject.');
                 }
             });
         });
     });
 </script>
 @endsection
+
