@@ -104,7 +104,7 @@
                         // Delay the reload to give time for the toastr notification to show
                         setTimeout(function(){
                             location.reload();
-                        }, 2000); // Adjust the delay time (in milliseconds) as needed
+                        }, 1300); // Adjust the delay time (in milliseconds) as needed
                     } else {
                         toastr.error(data.msg);
                     }
