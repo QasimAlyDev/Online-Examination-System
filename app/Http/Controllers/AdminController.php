@@ -7,6 +7,7 @@ use App\Models\Subject;
 
 class AdminController extends Controller
 {
+    // subject add
     public function addSubject(Request $request){
         try {
             
@@ -21,6 +22,27 @@ class AdminController extends Controller
     
             // Return success response
             return response()->json(['success' => true, 'msg' => 'Subject added successfully.']);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        }
+    }
+    //subject edit
+    public function editSubject(Request $request){
+        try {
+            
+            $request->validate([
+                'subject' => 'required|unique:subjects,subject'
+            ]);
+
+            // update the subject into the database
+            $subject = Subject::find($request->id);
+            $subject->subject = $request->subject;
+            $subject->save();
+
+    
+            // Return success response
+            return response()->json(['success' => true, 'msg' => 'Subject updated successfully.']);
         } catch (\Exception $e) {
             // Return error response
             return response()->json(['success' => false, 'msg' => $e->getMessage()]);

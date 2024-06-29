@@ -22,30 +22,30 @@
             </button>
             <div class="card">
                 <div class="card-body">
-                    <!-- Modal -->
+                    <!-- Subject Add Modal -->
                     <div class="modal fade " id="addSubjectModel" data-bs-backdrop="static" data-bs-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <form id="addSubject">
-                                @csrf
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="staticBackdropLabel">Add Subject</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Add Subject</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="addSubject">
+                                        @csrf
                                         <div class="mb-3">
                                             <label for="subject-name" class="col-form-label">Subject Name:</label>
                                             <input type="text" class="form-control" id="subject-name" name="subject"
                                                 required>
                                         </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="submit" class="btn btn-primary">Add</button>
-                                    </div>
                                 </div>
-                            </form>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
 
@@ -55,21 +55,57 @@
                             <tr>
                                 <th>#</th>
                                 <th>Subjects</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($subjects as $subject )
-                                
+                            @foreach ($subjects as $subject)
                             <tr>
                                 <td>{{ $subject->id }}</td>
                                 <td>{{ $subject->subject }}</td>
-                                <td>Edit</td>
-                                <td>Delete</td>
+                                <td>
+                                    <!-- Edit Icon -->
+                                    <a href="#" class="text-primary me-3 editButton" data-id="{{ $subject->id }}" data-subject="{{ $subject->subject }}"
+                                        title="Edit Subject" data-bs-toggle="modal" data-bs-target="#editSubjectModel">
+                                        <i class="ri-edit-2-line fs-5"></i>
+                                    </a>
+                                    <!-- Subject Edit Modal -->
+                                    <div class="modal fade " id="editSubjectModel" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Edit Subject</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form id="editSubject">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <label for="subject-name" class="col-form-label">Subject
+                                                                Name:</label>
+                                                            <input type="text" class="form-control" id="edit_subject_name"
+                                                                name="subject">
+                                                            <input type="hidden" class="form-control" name="id" id="edit_subject_id"
+                                                                name="subject">
+                                                        </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary">Update</button>
+                                                </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Delete Icon -->
+                                    <a href="#" class="text-danger" title="Delete Subject">
+                                        <i class="ri-delete-bin-2-line fs-5"></i>
+                                    </a>
+                                </td>
                             </tr>
                             @endforeach
-                            
                         </tbody>
                     </table>
                     <!-- End Table with stripped rows -->
@@ -81,10 +117,11 @@
     </div>
 </section>
 
-
 @endsection
+
 @section('customjs')
 <script>
+    // Add Subject
     $(document).ready(function(){
         $("#addSubject").submit(function(e){
             e.preventDefault();
@@ -115,6 +152,43 @@
             });
         });
     });
+
+    // Edit Subject
+
+    $(".editButton").click(function(){
+        var subject_id = $(this).attr('data-id');
+        var subject_name = $(this).attr('data-subject');
+        $("#edit_subject_name").val(subject_name);
+        $("#edit_subject_id").val(subject_id);
+    })
+
+    $("#editSubject").submit(function(e){
+            e.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('editSubject') }}",
+                type: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data){
+                    if(data.success == true){
+                        toastr.success(data.msg);
+                        // Delay the reload to give time for the toastr notification to show
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1300); // Adjust the delay time (in milliseconds) as needed
+                    } else {
+                        toastr.error(data.msg);
+                    }
+                },
+                error: function(xhr){
+                    toastr.error('An error occurred while adding the subject.');
+                }
+            });
+        });
 </script>
 @endsection
-
