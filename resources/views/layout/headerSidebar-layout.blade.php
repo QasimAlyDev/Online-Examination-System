@@ -58,7 +58,9 @@
     <aside id="sidebar" class="sidebar">
 
         <ul class="sidebar-nav" id="sidebar-nav">
-
+            
+            <li class="nav-heading">Pages</li>
+            
             <li class="nav-item">
                 <a class="nav-link " href="/admin/dashboard">
                     <i class="bi bi-book"></i>
@@ -66,7 +68,6 @@
                 </a>
             </li><!-- End Dashboard Nav -->
 
-            <li class="nav-heading">Pages</li>
             
             <!-- End Profile Page Nav -->
 
