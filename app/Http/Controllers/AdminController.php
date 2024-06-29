@@ -9,7 +9,11 @@ class AdminController extends Controller
 {
     public function addSubject(Request $request){
         try {
-    
+            
+            $request->validate([
+                'subject' => 'required|unique:subjects,subject'
+            ]);
+            
             // Insert the subject into the database
             Subject::create([
                 'subject' => $request->subject
