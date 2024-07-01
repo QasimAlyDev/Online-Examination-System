@@ -88,8 +88,7 @@
                                                                 Name:</label>
                                                             <input type="text" class="form-control" id="edit_subject_name"
                                                                 name="subject">
-                                                            <input type="hidden" class="form-control" name="id" id="edit_subject_id"
-                                                                name="subject">
+                                                            <input type="hidden" class="form-control" name="id" id="edit_subject_id">
                                                         </div>
                                                 </div>
                                                 <div class="modal-footer">
