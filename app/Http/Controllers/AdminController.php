@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Subject;
+Use App\Models\Exam;
 
 class AdminController extends Controller
 {
@@ -62,6 +63,30 @@ class AdminController extends Controller
             return response()->json(['success' => false, 'msg' => $e->getMessage()]);
         }
     }
-    
+
+    // exam dashboard load
+    public function examDashboard(){
+        $subjects = Subject::all();
+        return view('admin.exam-dashboard',['subjects' => $subjects]);
+    }
+    public function addExam(Request $request){
+
+        try {
+            
+            // insert the exam into the database
+            Exam::create([
+                'exam_name' => $request->exam_name,
+                'subject_id' => $request->subject_id,
+                'date' => $request->date,
+                'time' => $request->time
+            ]);
+            
+            // Return success response
+            return response()->json(['success' => true, 'msg' => 'Exam Added successfully.']);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        }
+    }
 }
 

@@ -66,6 +66,12 @@
                     <i class="bi bi-book"></i>
                     <span>Subjects</span>
                 </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " href="/admin/exam">
+                    <i class="bi bi-book"></i>
+                    <span>Exams</span>
+                </a>
             </li><!-- End Dashboard Nav -->
 
             
@@ -78,6 +84,7 @@
     <main id="main" class="main">
 
         @yield('adminDashboard')
+        @yield('examDashboard')
 
     </main><!-- End #main -->
 

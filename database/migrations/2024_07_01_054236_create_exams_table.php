@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubjectsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateSubjectsTable extends Migration
      */
     public function up()
     {
-        Schema::create('subjects', function (Blueprint $table) {
-            $table->id(); // Creates an auto-incrementing unsigned BIGINT (primary key)
-            $table->string('subject', 255); // Creates a VARCHAR column for subject with length 255
+        Schema::create('exams', function (Blueprint $table) {
+            $table->id();
+            $table->string('exam_name',255);
+            $table->integer('subject_id');
+            $table->string('date',255);
+            $table->string('time',255);
             $table->timestamps();
         });
     }
@@ -27,6 +30,6 @@ class CreateSubjectsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subjects');
+        Schema::dropIfExists('exams');
     }
-}
+};
