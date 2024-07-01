@@ -69,7 +69,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link " href="/admin/exam">
-                    <i class="bi bi-book"></i>
+                    <i class="bi bi-list-task"></i>
                     <span>Exams</span>
                 </a>
             </li><!-- End Dashboard Nav -->
