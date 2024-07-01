@@ -66,7 +66,41 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- Table with stripped rows -->
+                    <table class="table datatable">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Exam Name</th>
+                                <th>Subject</th>
+                                <th>Date</th>
+                                <th>Time Duration</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($exams as $exam)
+                            <tr>
+                                <td>{{ $exam->id }}</td>
+                                <td>{{ $exam->exam_name }}</td>
+                                <td>{{ $exam->subjects[0]['subject'] }}</td>
+                                <td>{{ $exam->date }}</td>
+                                <td>{{ $exam->time }} Hrs</td>
+                                <td>
+                                    <a href="#" class="text-primary me-3 editButton" data-id=""
+                                        data-exam="" title="Edit Exam">
+                                        <i class="ri-edit-2-line fs-5"></i>
+                                    </a>
+                                    <a href="#" class="text-danger me-3 deleteButton" data-id=""
+                                        data-exam="" title="Delete Exam">
+                                        <i class="ri-delete-bin-2-line fs-5"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
                 </div>
             </div>
 
