@@ -48,6 +48,20 @@ class AdminController extends Controller
             return response()->json(['success' => false, 'msg' => $e->getMessage()]);
         }
     }
+    //subject delete
+    public function deleteSubject(Request $request){
+        try {
+            
+            // delete the subject into the database
+            $subject = Subject::where('id',$request->id)->delete();
+            
+            // Return success response
+            return response()->json(['success' => true, 'msg' => 'Subject deleted successfully.']);
+        } catch (\Exception $e) {
+            // Return error response
+            return response()->json(['success' => false, 'msg' => $e->getMessage()]);
+        }
+    }
     
 }
 

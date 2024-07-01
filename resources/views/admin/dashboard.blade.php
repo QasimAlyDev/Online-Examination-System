@@ -32,18 +32,18 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <div class="modal-body">
-                                    <form id="addSubject">
+                                <form id="addSubject">
+                                    <div class="modal-body">
                                         @csrf
                                         <div class="mb-3">
                                             <label for="subject-name" class="col-form-label">Subject Name:</label>
                                             <input type="text" class="form-control" id="subject-name" name="subject"
                                                 required>
                                         </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-primary">Add</button>
-                                </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -65,8 +65,9 @@
                                 <td>{{ $subject->subject }}</td>
                                 <td>
                                     <!-- Edit Icon -->
-                                    <a href="#" class="text-primary me-3 editButton" data-id="{{ $subject->id }}" data-subject="{{ $subject->subject }}"
-                                        title="Edit Subject" data-bs-toggle="modal" data-bs-target="#editSubjectModel">
+                                    <a href="#" class="text-primary me-3 editButton" data-id="{{ $subject->id }}"
+                                        data-subject="{{ $subject->subject }}" title="Edit Subject"
+                                        data-bs-toggle="modal" data-bs-target="#editSubjectModel">
                                         <i class="ri-edit-2-line fs-5"></i>
                                     </a>
                                     <!-- Subject Edit Modal -->
@@ -80,28 +81,58 @@
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
-                                                <div class="modal-body">
-                                                    <form id="editSubject">
+                                                <form id="editSubject">
+                                                    <div class="modal-body">
                                                         @csrf
                                                         <div class="mb-3">
                                                             <label for="subject-name" class="col-form-label">Subject
                                                                 Name:</label>
-                                                            <input type="text" class="form-control" id="edit_subject_name"
-                                                                name="subject">
-                                                            <input type="hidden" class="form-control" name="id" id="edit_subject_id">
+                                                            <input type="text" class="form-control"
+                                                                id="edit_subject_name" name="subject">
+                                                            <input type="hidden" class="form-control" name="id"
+                                                                id="edit_subject_id">
                                                         </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-primary">Update</button>
-                                                </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Update</button>
+                                                    </div>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Delete Icon -->
-                                    <a href="#" class="text-danger" title="Delete Subject">
+                                    <a href="#" class="text-danger deleteButton" title="Delete Subject"
+                                        data-id="{{ $subject->id }}" data-bs-toggle="modal"
+                                        data-bs-target="#deleteSubjectModel">
                                         <i class="ri-delete-bin-2-line fs-5"></i>
                                     </a>
+                                    <!-- Subject delete Modal -->
+                                    <div class="modal fade " id="deleteSubjectModel" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Delete Subject</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <form id="deleteSubject">
+                                                    <div class="modal-body">
+                                                        @csrf
+                                                        <div class="mb-3">
+                                                            <p>Are you sure you want to delete this subject?</p>
+                                                            <input type="hidden" class="form-control" name="id"
+                                                                id="delete_subject_id">
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-primary">Delete</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach
@@ -168,6 +199,42 @@
 
             $.ajax({
                 url: "{{ route('editSubject') }}",
+                type: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(data){
+                    if(data.success == true){
+                        toastr.success(data.msg);
+                        // Delay the reload to give time for the toastr notification to show
+                        setTimeout(function(){
+                            location.reload();
+                        }, 1300); // Adjust the delay time (in milliseconds) as needed
+                    } else {
+                        toastr.error(data.msg);
+                    }
+                },
+                error: function(xhr){
+                    toastr.error('An error occurred while adding the subject.');
+                }
+            });
+        });
+
+        // Delete Subject
+
+    $(".deleteButton").click(function(){
+        var subject_id = $(this).attr('data-id');
+        $("#delete_subject_id").val(subject_id);
+    })
+
+    $("#deleteSubject").submit(function(e){
+            e.preventDefault();
+
+            var formData = $(this).serialize();
+
+            $.ajax({
+                url: "{{ route('deleteSubject') }}",
                 type: "POST",
                 data: formData,
                 headers: {
