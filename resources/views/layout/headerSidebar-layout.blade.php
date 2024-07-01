@@ -62,13 +62,13 @@
             <li class="nav-heading">Pages</li>
             
             <li class="nav-item">
-                <a class="nav-link " href="/admin/dashboard">
+                <a class="nav-link" href="/admin/dashboard">
                     <i class="bi bi-book"></i>
                     <span>Subjects</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " href="/admin/exam">
+                <a class="nav-link" href="/admin/exam">
                     <i class="bi bi-list-task"></i>
                     <span>Exams</span>
                 </a>
